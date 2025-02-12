@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Investment Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E2A78;
+            --secondary: #2940B8;
+            --accent: #A6B1E1;
+            --gold: #DCD6F7;
+            --dark: #0A1128;
+            --light: #F4F7FF;
+            --success: #4CAF50;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            letter-spacing: 0.3px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(166, 177, 225, 0.1), rgba(220, 214, 247, 0.05));
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .display-4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead {
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 214, 247, 0.2);
+            box-shadow: 0 12px 40px rgba(166, 177, 225, 0.1);
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title i {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(220, 214, 247, 0.2) 0%, rgba(220, 214, 247, 0.2) 100%);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            margin: 1.5rem 0;
+        }
+
+        .benefit-icon {
+            color: var(--gold);
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(166, 177, 225, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(166, 177, 225, 0.4);
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+        }
+
+        .text-success {
+            color: var(--gold) !important;
+        }
+
+        .text-warning {
+            color: var(--accent) !important;
+        }
+
+        .display-4.savings {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .small-note {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .usage-stats {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+        }
+
+        .stat-divider {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 300;
+        }
+
+        .cost-per-event-container, .system-cost-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hover-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cost-breakdown, .system-breakdown {
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 20px);
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            text-align: left;
+            min-width: 200px;
+            border-left: 2px solid var(--accent);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .cost-breakdown::before, .system-breakdown::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-50%) rotate(45deg);
+            border-left: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .cost-per-event-container:hover + .cost-breakdown,
+        .cost-breakdown:hover,
+        .system-cost-container:hover + .system-breakdown,
+        .system-breakdown:hover {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(5px);
+        }
+
+        .annual-spend {
+            padding-top: 2rem;
+        }
+
+        .annual-counter {
+            font-size: 3.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-value {
+            transition: color 0.3s ease;
+        }
+
+        .stat-value:hover {
+            color: #fff;
+        }
+
+        .calculations-container {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .help-text {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+        }
+
+        .compatibility-message {
+            font-size: 1.4rem;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .highlight-text {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.6rem;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(220, 214, 247, 0.1);
+            border-radius: 8px;
+            margin: 0 0.3rem;
+        }
+
+        .hover-hint {
+            color: var(--accent);
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hover-hint i {
+            margin-right: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payback-section, .projection-section {
+            padding: 2rem 0;
+        }
+
+        .payback-explanation {
+            color: var(--accent);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .payback-progress-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .payback-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .payback-progress::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: var(--progress);
+            background: var(--gold);
+            border-radius: 2px;
+            animation: progressGrow 2s ease-out;
+        }
+
+        .payback-marker {
+            position: absolute;
+            left: var(--progress);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: markerPop 0.5s ease-out 2s backwards;
+        }
+
+        .payback-labels {
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .calculation-steps {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .step {
+            color: var(--light);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+        }
+
+        .step-result {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding-top: 1.5rem;
+            text-shadow: 0 0 10px rgba(220, 214, 247, 0.2);
+        }
+
+        @keyframes progressGrow {
+            from { width: 0; }
+            to { width: var(--progress); }
+        }
+
+        @keyframes markerPop {
+            from {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .payback-counter, .projection-counter {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .waitlist-card {
+            background: linear-gradient(135deg, rgba(30, 42, 120, 0.4), rgba(41, 64, 184, 0.2));
+            border: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .waitlist-header {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .waitlist-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .waitlist-subtitle {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--gold);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box.glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotate 10s linear infinite;
+        }
+
+        .point {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .point:hover {
+            transform: translateX(10px);
+        }
+
+        .point i {
+            color: var(--gold);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .point div strong {
+            display: block;
+            color: var(--gold);
+            margin-bottom: 0.2rem;
+        }
+
+        .point div span {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .rental-option {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .rental-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .rental-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .rental-features span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .rental-features i {
+            margin-right: 0.5rem;
+            color: var(--gold);
+        }
+
+        .custom-checkbox .form-check-input:checked {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .payback-counter {
+            font-size: 4rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 20px rgba(220, 214, 247, 0.2);
+        }
+
+        .projection-counter {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 20px rgba(220, 214, 247, 0.2);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .calculation-steps {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .step {
+            color: var(--light);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+        }
+
+        .step-result {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding-top: 1.5rem;
+            text-shadow: 0 0 10px rgba(220, 214, 247, 0.2);
+        }
+
+        .highlight-value {
+            color: var(--gold);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(220, 214, 247, 0.2);
+        }
+
+        .btn-waitlist {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(220, 214, 247, 0.3);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-waitlist:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(220, 214, 247, 0.4);
+        }
+
+        .btn-waitlist::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            animation: rotate 10s linear infinite;
+        }
+
+        .payback-counter {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 20px rgba(220, 214, 247, 0.2);
+        }
+
+        .hexagon-card {
+            clip-path: polygon(5% 0, 95% 0, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%, 0 5%);
+            background: linear-gradient(135deg, rgba(30, 42, 120, 0.6), rgba(41, 64, 184, 0.3));
+            border: none;
+            margin: 2rem auto;
+        }
+
+        .revenue-highlight {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .rental-badge.pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-waitlist {
+            background: linear-gradient(135deg, #FFD700, var(--gold));
+            font-size: 1.3rem;
+            padding: 1.5rem 4rem;
+        }
+
+        .prism-card {
+            clip-path: polygon(0 15%, 15% 0, 85% 0, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0 85%);
+            background: linear-gradient(135deg, rgba(30, 42, 120, 0.8), rgba(41, 64, 184, 0.4));
+            border: none;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+
+        .vision-header {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .vision-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .vision-subtitle {
+            color: var(--accent);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .vision-points .point {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .lead-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .btn-waitlist {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-waitlist:hover {
+            background: var(--gold);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .point i {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .pilot-info {
+            padding: 0 2rem;
+        }
+        
+        .btn-waitlist {
+            margin: 0 auto;
+        }
+
+        .diamond-card {
+            clip-path: polygon(15% 0, 85% 0, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0 85%, 0 15%);
+            background: linear-gradient(135deg, rgba(30, 42, 120, 0.8), rgba(41, 64, 184, 0.4));
+            border: none;
+            margin: 3rem auto;
+            padding: 3rem;
+        }
+
+        .marketplace-badge {
+            display: inline-block;
+            background: rgba(220, 214, 247, 0.1);
+            color: var(--gold);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .vision-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .point {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .point:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-waitlist {
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            padding: 1.2rem 3.5rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .btn-waitlist:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 214, 247, 0.3);
+        }
+
+        .commitment-note {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .pilot-info {
+            height: 100%;
+            padding: 0 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header text-center">
+        <h1 class="display-4">Your Power Solution Results</h1>
+        <p class="lead">Discover your path to sustainable power</p>
+    </div>
+
+    <div class="container">
+        <div class="hover-hint text-center mb-4">
+            <i class="bi bi-info-circle"></i> Hover over cost figures to see detailed breakdowns
+        </div>
+
+        <!-- Current Spending Analysis -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-graph-up"></i> Current Spending Analysis</h5>
+                
+                <!-- Events and Cost per Event Row -->
+                <div class="usage-stats d-flex justify-content-center align-items-center mb-4">
+                    <div class="calculations-container d-flex align-items-center gap-5">
+                        <div class="text-center">
+                            <div class="stat-value">{{ "%.0f"|format(calculations.get('events_per_year', 0)) }}</div>
+                            <div class="stat-label">Events per Year</div>
+                        </div>
+                        <div class="stat-divider">×</div>
+                        <div class="text-center position-relative hover-container">
+                            <div class="cost-per-event-container">
+                                <div class="stat-value">${{ "%.2f"|format(calculations.get('cost_per_event', 0)) }}</div>
+                                <div class="stat-label">Cost per Event</div>
+                            </div>
+                            <div class="cost-breakdown">
+                                <small>
+                                    {% if calculations.get('rental_cost', 0) > 0 %}
+                                        Rental: ${{ "%.2f"|format(calculations.get('rental_cost', 0)) }}<br>
+                                    {% endif %}
+                                    {% if calculations.get('fuel_cost', 0) > 0 %}
+                                        Fuel: ${{ "%.2f"|format(calculations.get('fuel_cost', 0)) }}<br>
+                                    {% endif %}
+                                    {% if calculations.get('grounding_cost', 0) > 0 %}
+                                        Grounding: ${{ "%.2f"|format(calculations.get('grounding_cost', 0)) }}<br>
+                                    {% endif %}
+                                    {% if calculations.get('permit_cost', 0) > 0 %}
+                                        Permits: ${{ "%.2f"|format(calculations.get('permit_cost', 0)) }}<br>
+                                    {% endif %}
+                                    {% if calculations.get('other_annual_costs', 0) > 0 %}
+                                        Other: ${{ "%.2f"|format(calculations.get('other_annual_costs', 0) / calculations.get('events_per_year', 1) if calculations.get('events_per_year', 0) > 0 else 0) }}/event
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Annual Spend -->
+                <div class="annual-spend text-center">
+                    <div class="stat-label mb-2">Annual Power Costs</div>
+                    <div class="stat-value annual-counter display-3">
+                        ${{ "%.2f"|format(calculations.get('annual_temp_spend', 0)) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Analysis -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-lightning-charge"></i> Smart Investment Options</h5>
+                
+                <!-- Full Battery System -->
+                <div class="option-card mb-4">
+                    <h6 class="option-title">Full Battery System</h6>
+                    <div class="compatibility-message">
+                        Based on your power demand, you're compatible with a
+                        <span class="highlight-text">{{ calculations.get('battery_capacity', '100kWh') }} Battery System</span>
+                    </div>
+                    <div class="text-center position-relative mt-4">
+                        <div class="hover-container">
+                            <div class="system-cost-container">
+                                <div class="stat-value">${{ "%.2f"|format(calculations.get('battery_cost', 0) + (calculations.get('annual_fuel_cost', 0) * 0.2)) }}</div>
+                                <div class="stat-label">Total System Cost</div>
+                            </div>
+                            <div class="cost-breakdown system-breakdown">
+                                <small>
+                                    Battery System: ${{ "%.2f"|format(calculations.get('battery_cost', 0)) }}<br>
+                                    Energy Cost: ${{ "%.2f"|format(calculations.get('annual_fuel_cost', 0) * 0.2) }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hybrid System -->
+                <div class="option-card mb-4">
+                    <h6 class="option-title">Hybrid System Solution</h6>
+                    <div class="compatibility-message">
+                        Recommended Configuration:
+                        <span class="highlight-text">
+                            {{ calculations.get('battery_capacity', '100kWh').split('k')[0]|int // 2 }}kWh Battery
+                        </span>
+                        +
+                        <span class="highlight-text">
+                            {{ calculations.get('battery_capacity', '100kWh').split('k')[0]|int // 2 }}kW Generator
+                        </span>
+                    </div>
+                    <div class="text-center position-relative mt-4">
+                        <div class="hover-container">
+                            <div class="system-cost-container">
+                                <div class="stat-value">${{ "%.2f"|format(calculations.get('battery_cost', 0) / 2 + (calculations.get('annual_fuel_cost', 0) * 0.25)) }}</div>
+                                <div class="stat-label">Total System Cost</div>
+                            </div>
+                            <div class="cost-breakdown system-breakdown">
+                                <small>
+                                    System Cost: ${{ "%.2f"|format(calculations.get('battery_cost', 0) / 2) }}<br>
+                                    Annual Fuel Cost: ${{ "%.2f"|format(calculations.get('annual_fuel_cost', 0) * 0.25) }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="help-text">75% reduction in fuel consumption</div>
+                    </div>
+                </div>
+
+                {% if calculations.get('solar_recommended', False) %}
+                <!-- Solar Canopy Option -->
+                <div class="option-card highlight-card">
+                    <h6 class="option-title"><i class="bi bi-sun"></i> Solar Canopy Addition</h6>
+                    <p class="mb-2">Recommended for your usage pattern!</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><i class="bi bi-solar-panel"></i> Additional Cost: 
+                                <span class="stat-value">${{ "%.2f"|format(calculations.get('solar_cost', 0)) }}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><i class="bi bi-piggy-bank"></i> Additional Annual Savings: 
+                                <span class="stat-value">${{ "%.2f"|format(calculations.get('solar_savings', 0)) }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Return on Investment -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-calculator"></i> Return on Investment</h5>
+                
+                <!-- Payback Period -->
+                <div class="payback-section text-center mb-5">
+                    <div class="stat-label">Your Path to Profitability</div>
+                    <div class="payback-counter stat-value display-4" data-value="{{ calculations.get('months_to_breakeven', 0) }}">
+                        0 months
+                    </div>
+                    <div class="payback-explanation mt-3">
+                        <i class="bi bi-info-circle"></i>
+                        With monthly power costs of <span class="highlight-value">${{ "%.2f"|format((calculations.get('cost_per_event', 0) * calculations.get('events_per_year', 0)) / 12) }}</span>,
+                        your battery system will pay for itself in <span class="highlight-value">{{ "%.1f"|format(calculations.get('months_to_breakeven', 0)) }} months</span>
+                    </div>
+                    <div class="payback-progress-container mt-4">
+                        <div class="payback-progress" style="--progress: {{ (calculations.get('months_to_breakeven', 0) / 84) * 100 }}%">
+                            <div class="payback-marker"></div>
+                        </div>
+                        <div class="payback-labels">
+                            <span>Purchase</span>
+                            <span class="highlight-value">Break Even Point</span>
+                            <span>7 Year Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7-Year Projection -->
+                <div class="projection-section text-center">
+                    <div class="stat-label">7-Year Savings Projection</div>
+                    <div class="projection-counter stat-value display-4 mb-3 text-success">
+                        ${{ "%.2f"|format(calculations.get('lifetime_savings', 0)) }}
+                    </div>
+                    <div class="savings-breakdown">
+                        <div class="calculation-steps">
+                            <div class="step">Annual Power Costs: ${{ "%.2f"|format(calculations.get('annual_temp_spend', 0)) }}</div>
+                            <div class="step">× 7 Year Battery Life Cycle</div>
+                            <div class="step">− Initial System Cost: ${{ "%.2f"|format(calculations.get('battery_cost', 0)) }}</div>
+                            <div class="step-result">=  ${{ "%.2f"|format(calculations.get('lifetime_savings', 0)) }} Total Savings</div>
+                        </div>
+                    </div>
+                    <p class="text-muted mt-3">
+                        <i class="bi bi-clock-history"></i> Based on a standard battery life cycle of 7 years (approximately 4000 charge cycles)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefits -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-check-circle"></i> Benefits of Switching</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="benefit-icon bi bi-volume-down"></i> 32x quieter operation</p>
+                        <p><i class="benefit-icon bi bi-graph-down"></i> 20-40% reduction in costs</p>
+                        <p><i class="benefit-icon bi bi-fuel-pump"></i> Zero refueling needed</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="benefit-icon bi bi-tools"></i> No maintenance required</p>
+                        <p><i class="benefit-icon bi bi-phone"></i> Live monitoring via app</p>
+                        <p><i class="benefit-icon bi bi-tree"></i> Eco-friendly solution</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update the waitlist card section -->
+        <div class="card mb-4 diamond-card">
+            <div class="card-body">
+                <div class="vision-header text-center mb-5">
+                    <div class="marketplace-badge">First Power Rental Marketplace</div>
+                    <div class="vision-title">
+                        Turn Your Battery System into a Revenue Stream
+                    </div>
+                </div>
+                
+                <div class="waitlist-content">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="vision-points">
+                                <div class="point">
+                                    <i class="bi bi-cash-stack"></i>
+                                    <div>
+                                        <strong>Earn While You're Not Using It</strong>
+                                        <span>Generate revenue by renting out your battery system</span>
+                                    </div>
+                                </div>
+                                <div class="point">
+                                    <i class="bi bi-shield-check"></i>
+                                    <div>
+                                        <strong>Pre-Vetted Network</strong>
+                                        <span>Connect with trusted renters in your area</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="pilot-info d-flex flex-column justify-content-center">
+                                <form action="/join_waitlist" method="POST" class="waitlist-form text-center">
+                                    <button type="submit" class="btn btn-waitlist btn-lg mb-3">
+                                        Join the Waitlist
+                                    </button>
+                                    <div class="commitment-note">
+                                        We'll help you transform your ${{ "%.2f"|format(calculations.get('annual_temp_spend', 0)) }} 
+                                        power spend into a profitable asset
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-5">
+            <a href="/" class="btn btn-primary btn-lg">
+                <i class="bi bi-arrow-left"></i> Back to Survey
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animated counter for annual spend
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = '$' + current.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Start animation when element comes into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const finalValue = parseFloat(element.textContent.replace('$', '').replace(',', ''));
+                    animateValue(element, 0, finalValue, 1500);
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe the counter element
+        document.querySelectorAll('.annual-counter').forEach(counter => {
+            observer.observe(counter);
+        });
+
+        // Animated counter for payback period
+        function animatePaybackCounter() {
+            const counter = document.querySelector('.payback-counter');
+            const targetValue = parseFloat(counter.dataset.value);
+            let currentValue = 0;
+            
+            const animate = () => {
+                if (currentValue < targetValue) {
+                    currentValue = Math.min(currentValue + (targetValue / 50), targetValue);
+                    counter.textContent = currentValue.toFixed(1) + ' months';
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animate();
+                    observer.disconnect();
+                }
+            });
+            
+            observer.observe(counter);
+        }
+
+        document.addEventListener('DOMContentLoaded', animatePaybackCounter);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Solution Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E2A78;
+            --secondary: #2940B8;
+            --accent: #A6B1E1;
+            --gold: #DCD6F7;
+            --dark: #0A1128;
+            --light: #F4F7FF;
+            --success: #4CAF50;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            letter-spacing: 0.3px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(166, 177, 225, 0.1), rgba(220, 214, 247, 0.05));
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.8s ease;
+        }
+
+        .display-4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead {
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 214, 247, 0.2);
+            box-shadow: 0 12px 40px rgba(166, 177, 225, 0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, rgba(166, 177, 225, 0.05), rgba(220, 214, 247, 0.02));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--light);
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(220, 214, 247, 0.2);
+            color: var(--light);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .help-text {
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cost-input-group {
+            position: relative;
+        }
+
+        .cost-input-group .form-control {
+            padding-left: 2rem;
+        }
+
+        .cost-input-group:before {
+            content: '$';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+        }
+
+        .form-check-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 214, 247, 0.3);
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .form-check-label {
+            color: var(--light);
+            font-size: 0.95rem;
+            padding-left: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(166, 177, 225, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(166, 177, 225, 0.4);
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem !important;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        /* Custom styling for range slider */
+        .form-range {
+            height: 6px;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            transition: all 0.2s ease;
+        }
+
+        .form-range::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(220, 214, 247, 0.3);
+        }
+
+        .form-range::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            border: none;
+        }
+
+        .text-gold {
+            color: var(--gold);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Update the reveal styles */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            display: none;  /* Hide all sections initially */
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;  /* Show when active */
+        }
+
+        .reveal.visible {
+            display: block;  /* Show but not animated yet */
+        }
+
+        /* Remove delay classes as we'll control timing via JS */
+        .header {
+            transition: all 0.8s ease;
+        }
+
+        #grid_percentage_container {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="header text-center">
+        <h1 class="display-4">Power Solution Assessment</h1>
+        <p class="lead">Let's analyze your temporary power needs</p>
+    </div>
+
+    <div class="container mb-5">
+        <form action="{{ url_for('submit_survey') }}" method="POST">
+            <!-- Basic Information -->
+            <div class="card mb-4 reveal">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="bi bi-person"></i> Basic Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="business_name" class="form-label">Business Name</label>
+                            <input type="text" class="form-control" id="business_name" name="business_name">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="industry" class="form-label">Industry</label>
+                            <select class="form-select" id="industry" name="industry">
+                                <option value="">Select Industry...</option>
+                                <option value="event_production">Event Production</option>
+                                <option value="construction">Construction or Contracting</option>
+                                <option value="catering">Catering</option>
+                                <option value="rental">Tent/Party Rental</option>
+                                <option value="municipality">Municipality</option>
+                                <option value="emergency">Emergency Services</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label for="state" class="form-label">State</label>
+                            <select class="form-select" id="state" name="state">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <!-- Add all states here -->
+                                <option value="NY">NY</option>
+                                <!-- ... -->
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label for="zip" class="form-label">Zip Code</label>
+                            <input type="text" class="form-control" id="zip" name="zip" pattern="[0-9]{5}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basic Usage Information -->
+            <div class="card mb-4 reveal">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="bi bi-calendar-event"></i> Usage Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <label for="events_per_year" class="form-label">Number of Events per Year that Require Temporary Power</label>
+                        <input type="number" class="form-control" id="events_per_year" name="events_per_year" min="0">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Power Source Type</label>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="grid_connection" name="power_source[]" value="grid">
+                                    <label class="form-check-label" for="grid_connection">Grid Connection</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="diesel_generator" name="power_source[]" value="diesel">
+                                    <label class="form-check-label" for="diesel_generator">Diesel Generator</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="grid_percentage_container" style="display: none; transition: all 0.3s ease;">
+                                    <label for="grid_percentage" class="form-label">Events with Grid Access</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="grid_percentage" 
+                                               name="grid_percentage" min="0" 
+                                               placeholder="Number of events">
+                                    </div>
+                                    <div class="help-text">How many of your events have access to grid power?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Power Requirements -->
+            <div class="card mb-4 reveal">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="bi bi-lightning-charge"></i> Power Requirements</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="power_demand_kw" class="form-label">Typical Power Demand (kW)</label>
+                            <input type="number" class="form-control" id="power_demand_kw" name="power_demand_kw">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="power_demand_duration" class="form-label">Duration (hours)</label>
+                            <input type="number" class="form-control" id="power_demand_duration" name="power_demand_duration" 
+                                   step="0.5" min="0.5" placeholder="How long do you need this power?">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="peak_power" class="form-label">Peak Power (kW)</label>
+                            <input type="number" class="form-control" id="peak_power" name="peak_power">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="peak_duration" class="form-label">Peak Duration</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="range" class="form-range flex-grow-1" id="peak_duration" name="peak_duration" 
+                                       min="5" max="7200" step="5" value="300">
+                                <span id="peak_duration_display" class="text-gold" style="min-width: 100px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="steady_power" class="form-label">Percentage of Time in Steady Power State</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="range" class="form-range flex-grow-1" id="steady_power" name="steady_power" 
+                                       min="0" max="100" step="1" value="50">
+                                <span id="steady_power_display" class="text-gold" style="min-width: 60px;"></span>
+                            </div>
+                            <div class="help-text">What percentage of time does your power demand remain constant?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Information -->
+            <div class="card mb-4 reveal">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="bi bi-cash"></i> Cost Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="rental_cost" class="form-label">Rental Cost per Use ($)</label>
+                            <div class="cost-input-group">
+                                <input type="number" class="form-control" id="rental_cost" name="rental_cost">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fuel_cost" class="form-label">Fuel Cost per Use ($)</label>
+                            <div class="cost-input-group">
+                                <input type="number" class="form-control" id="fuel_cost" name="fuel_cost">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="grounding_cost" class="form-label">Grounding Service Cost ($)</label>
+                            <div class="cost-input-group">
+                                <input type="number" class="form-control" id="grounding_cost" name="grounding_cost">
+                            </div>
+                            <div class="help-text">Cost per event</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="permit_cost" class="form-label">Permit Cost ($)</label>
+                            <div class="cost-input-group">
+                                <input type="number" class="form-control" id="permit_cost" name="permit_cost">
+                            </div>
+                            <div class="help-text">Cost per event</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="maintenance_cost" class="form-label">Other Costs ($)</label>
+                            <div class="cost-input-group">
+                                <input type="number" class="form-control" id="maintenance_cost" name="maintenance_cost">
+                            </div>
+                            <div class="help-text">Service, shipping, etc. (annual)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Calculate Your Savings <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to format duration
+        function formatDuration(seconds) {
+            if (seconds < 60) {
+                return seconds + " seconds";
+            } else if (seconds < 3600) {
+                return Math.round(seconds/60 * 10) / 10 + " minutes";
+            } else {
+                return Math.round(seconds/3600 * 10) / 10 + " hours";
+            }
+        }
+
+        // Update duration display when slider moves
+        const peakDurationSlider = document.getElementById('peak_duration');
+        const peakDurationDisplay = document.getElementById('peak_duration_display');
+        
+        function updateDurationDisplay() {
+            peakDurationDisplay.textContent = formatDuration(peakDurationSlider.value);
+        }
+        
+        peakDurationSlider.addEventListener('input', updateDurationDisplay);
+        
+        // Steady power percentage display
+        const steadyPowerSlider = document.getElementById('steady_power');
+        const steadyPowerDisplay = document.getElementById('steady_power_display');
+        
+        function updateSteadyPowerDisplay() {
+            steadyPowerDisplay.textContent = steadyPowerSlider.value + '%';
+        }
+        
+        steadyPowerSlider.addEventListener('input', updateSteadyPowerDisplay);
+        
+        // Initialize both displays
+        updateDurationDisplay();
+        updateSteadyPowerDisplay();
+
+        // Typeform-style reveal
+        let currentSection = 0;
+        const sections = document.querySelectorAll(".card");
+        const header = document.querySelector(".header");
+
+        // Hide all sections initially except the first
+        sections.forEach((section, index) => {
+            section.classList.add('reveal');
+            if (index === 0) {
+                section.classList.add('visible');
+                setTimeout(() => section.classList.add('active'), 100);
+            }
+        });
+
+        // Function to check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        }
+
+        // Function to handle scroll
+        function handleScroll() {
+            const visibleSections = document.querySelectorAll('.reveal.visible');
+            const lastVisible = visibleSections[visibleSections.length - 1];
+
+            if (lastVisible && isInViewport(lastVisible) && !lastVisible.classList.contains('active')) {
+                lastVisible.classList.add('active');
+                
+                // Show next section if exists
+                const nextIndex = Array.from(sections).indexOf(lastVisible) + 1;
+                if (sections[nextIndex]) {
+                    sections[nextIndex].classList.add('visible');
+                }
+            }
+
+            // Fade header when scrolling down
+            if (window.scrollY > 50) {
+                header.style.opacity = "0.5";
+            } else {
+                header.style.opacity = "1";
+            }
+        }
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Listen for scroll events
+        window.addEventListener("scroll", handleScroll);
+        
+        // Initial check
+        handleScroll();
+
+        // Update grid percentage functionality
+        const gridCheckbox = document.getElementById('grid_connection');
+        const gridPercentageContainer = document.getElementById('grid_percentage_container');
+
+        gridCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                gridPercentageContainer.style.display = 'block';
+                setTimeout(() => {
+                    gridPercentageContainer.style.opacity = '1';
+                }, 50);
+            } else {
+                gridPercentageContainer.style.opacity = '0';
+                setTimeout(() => {
+                    gridPercentageContainer.style.display = 'none';
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html> 
